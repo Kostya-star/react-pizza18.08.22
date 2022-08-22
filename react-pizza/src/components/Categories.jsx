@@ -50,8 +50,8 @@ const Categories = ({ items }) => {
                                       onClick={() => onSelectItem(index)} 
                                       key={`${name}_${index}`}>
                                         {name}
-                                      </li>)}
-
+                                    </li>)
+                                  }
     </ul>
   </div>
   )
