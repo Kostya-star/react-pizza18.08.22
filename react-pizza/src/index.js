@@ -11,10 +11,10 @@ root.render(
     <BrowserRouter>
       {/* <Routes> */}
         <App/>
-        { /* <Route exact path="/" element={<App />} /> */}
+        { /* <Route exact path="/" eleme nt={<App />} /> */}
       {/* </Routes> */}
     </BrowserRouter>
-  /* </React.StrictMode> */
+  /* </React.StrictMode> */   
 );
 
 reportWebVitals();
