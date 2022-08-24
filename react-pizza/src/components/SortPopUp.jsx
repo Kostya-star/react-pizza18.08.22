@@ -3,20 +3,20 @@ import { useEffect, useRef, useState } from 'react';
 
 const SortPopUP = ({items}) => {
 
-  const [visiblePopUp, setvisiblePopUp] = useState(false);
+  const [visiblePopUp, setVisiblePopUp] = useState(false);
   const sortRef = useRef();
-  const [activeItem, setactiveItem] = useState(0)
-  const activeListItem = items[activeItem];
+  const [activeItem, setActiveItem] = useState(0)
+  const activeListItem = items[activeItem].name;
 
 
   const toggleVisiblePopUp = () => {
-    setvisiblePopUp(!visiblePopUp);
+    setVisiblePopUp(!visiblePopUp);
   }
 
   const handleOutsideClick = (e) => {
     let path = e.path || (e.composedPath && e.composedPath());
     if (!path.includes(sortRef.current)) {
-      setvisiblePopUp(false);
+      setVisiblePopUp(false);
     }
   }
 
@@ -25,8 +25,8 @@ const SortPopUP = ({items}) => {
   }, []);
 
   const onSelectItem = (index) => {
-    setactiveItem(index);
-    setvisiblePopUp(false);
+    setActiveItem(index);
+    setVisiblePopUp(false);
   }
 
   
@@ -56,11 +56,11 @@ const SortPopUP = ({items}) => {
 
           <ul>
             {items &&
-              items.map((name, index) =>   <li 
+              items.map((obj, index) =>   <li 
                                               className={activeItem === index ? 'active' : ''}
                                               onClick={() => onSelectItem(index)}
-                                              key={`${name}_${index}`}>
-                                              {name}
+                                              key={`${obj.type}_${index}`}>
+                                              {obj.name}
                                             </li>
                                           )}
           </ul>

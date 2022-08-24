@@ -6,12 +6,16 @@ function Home({items}) {
     <div className="container">
       <div className="content__top">
         <Categories items={['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']} />
-        <SortPopUP items={['по популярности', 'по цене', 'по алфавиту']} />
+        <SortPopUP items={[
+                            {name:'по популярности', type: 'popular'}, 
+                            {name: 'по цене', type: 'price'}, 
+                            {name: 'по алфавиту', type: 'alphabet'},
+                          ]} 
+          />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-      <PizzaBlock/>
-        {
+        { 
           items.map(obj => <PizzaBlock  key={obj.id}
                                         {...obj}
                                         />)
