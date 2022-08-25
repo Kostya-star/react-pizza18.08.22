@@ -6,10 +6,12 @@ import {Header} from './components'
 import {Home, Cart} from './pages';
 
 import { Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
-import store from './redux/store';
-import {setPizzas} from './redux/actions/pizzas'
+// import store from './redux/store';
+import {setPizzas as setPizzasAction} from './redux/actions/pizzas'
+import {setSortBy as setSortByAction} from './redux/actions/filters'
+import {setCategoryBy as setCategoryByAction} from './redux/actions/filters'
 
 
 // function App() {
@@ -33,17 +35,17 @@ import {setPizzas} from './redux/actions/pizzas'
   //     </div>
   //   </div>
   // );
-// }
-
-class App extends React.Component {
-  componentDidMount() {
-    axios.get('http://localhost:3000/db.json').then(({data}) => {
-      store.dispatch(setPizzas(data.pizzas));
-    })
-  }
-
-  render() {
-    return (
+  // }
+  
+  class App extends React.Component {
+    componentDidMount() {
+      axios.get('http://localhost:3000/db.json').then(({data}) => {
+        this.props.setPizzas(data.pizzas);
+      })
+    }
+    
+    render() {
+      return (
       <div className="wrapper">
         <Header/>
         <div className="content">
@@ -54,15 +56,25 @@ class App extends React.Component {
         </div>
       </div>
     );
-  
+    
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    items: state.pizzas.items
-  }
+  return ({
+    items: state.pizzasReducer.items,
+    sortBy: state.filtersReducer.sortBy,
+    category: state.filtersReducer.category,
+  });
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    setPizzas: (items) => dispatch(setPizzasAction(items)), dispatch,
+    setSortBy: (name) => dispatch(setSortByAction(name)), dispatch,
+    setCategoryBy: (categoryIndex) => dispatch(setCategoryByAction(categoryIndex)), dispatch,
+  });
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
