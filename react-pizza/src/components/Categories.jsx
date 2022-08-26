@@ -9,7 +9,7 @@ const Categories = React.memo( ({ items, onClickItem}) => {
     setActiveItem(index);
     onClickItem(index)
   }
-  
+
   return (
     <div className="categories">
     <ul>

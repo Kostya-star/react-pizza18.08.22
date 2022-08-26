@@ -9,6 +9,7 @@ const SortPopUP = React.memo(({items}) => {
   const activeListItem = items[activeItem].name;
 
 
+
   const toggleVisiblePopUp = React.useCallback(() => {
     setVisiblePopUp(!visiblePopUp);
   })
@@ -29,7 +30,6 @@ const SortPopUP = React.memo(({items}) => {
     setVisiblePopUp(false);
   }
 
-  
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">

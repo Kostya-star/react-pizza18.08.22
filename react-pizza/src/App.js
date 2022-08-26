@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {useDispatch} from 'react-redux';
 
 import {Header} from './components'
@@ -8,18 +7,26 @@ import {Home, Cart} from './pages';
 import { Routes, Route } from 'react-router-dom';
 
 import store from './redux/store';
-import {setPizzas as setPizzasAС} from './redux/actions/pizzas'
+import {fetchPizzas} from './redux/actions/pizzas'
 // import {setSortBy as setSortByAC} from './redux/actions/filters'
 // import {setCategoryBy as setCategoryByAС} from './redux/actions/filters'
 
+// window.test = () => {
+//   axios.get('http://localhost:3001/pizzas').then(({data}) => {
+//     // dispatch(setPizzasAС(data));
+//     console.log(data);
+//   })
+// }
 
   const App = () => {
     const dispatch = useDispatch()
 
     React.useEffect(() => {
-      axios.get('http://localhost:3001/pizzas').then(({data}) => {
-        dispatch(setPizzasAС(data));
-      })
+      // axios.get('http://localhost:3001/pizzas').then(({data}) => {
+      //   dispatch(setPizzasAС(data));
+      // })
+      // dispatch(fetchPizzas)
+      console.log(fetchPizzas());
     }, [])
 
     return (
