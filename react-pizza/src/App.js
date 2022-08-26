@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {Header} from './components'
 import {Home, Cart} from './pages';
@@ -8,15 +8,17 @@ import {Home, Cart} from './pages';
 import { Routes, Route } from 'react-router-dom';
 
 import store from './redux/store';
-// import {setPizzas as setPizzasAС} from './redux/actions/pizzas'
+import {setPizzas as setPizzasAС} from './redux/actions/pizzas'
 // import {setSortBy as setSortByAC} from './redux/actions/filters'
 // import {setCategoryBy as setCategoryByAС} from './redux/actions/filters'
 
 
-  const App = ({setPizzas, items}) => {
+  const App = () => {
+    const dispatch = useDispatch()
+
     React.useEffect(() => {
-      axios.get('http://localhost:3000/db.json').then(({data}) => {
-        // setPizzasAС(data.pizzas)
+      axios.get('http://localhost:3001/pizzas').then(({data}) => {
+        dispatch(setPizzasAС(data));
       })
     }, [])
 
@@ -25,7 +27,7 @@ import store from './redux/store';
         <Header/>
         <div className="content">
           <Routes>
-            <Route exact path='/' element={<Home items={items}/>} />
+            <Route exact path='/' element={<Home/>} />
             <Route exact path='/cart' element={<Cart/>} />
           </Routes>
         </div>
@@ -36,9 +38,9 @@ import store from './redux/store';
 
 // const mapStateToProps = (state) => {
 //   return ({
-//     items: state.pizzasReducer.items,
-//     // sortBy: state.filtersReducer.sortBy,
-//     // category: state.filtersReducer.category,
+//     items: state.pizzas.items,
+//     // sortBy: state.filters.sortBy,
+//     // category: state.filters.category,
 //   });
 // }
 

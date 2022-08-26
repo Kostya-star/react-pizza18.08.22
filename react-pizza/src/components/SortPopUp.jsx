@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 
-const SortPopUP = ({items}) => {
+const SortPopUP = React.memo(({items}) => {
 
-  const [visiblePopUp, setVisiblePopUp] = useState(false);
-  const sortRef = useRef();
-  const [activeItem, setActiveItem] = useState(0)
+  const [visiblePopUp, setVisiblePopUp] = React.useState(false);
+  const sortRef = React.useRef();
+  const [activeItem, setActiveItem] = React.useState(0)
   const activeListItem = items[activeItem].name;
 
 
-  const toggleVisiblePopUp = () => {
+  const toggleVisiblePopUp = React.useCallback(() => {
     setVisiblePopUp(!visiblePopUp);
-  }
+  })
 
   const handleOutsideClick = (e) => {
     let path = e.path || (e.composedPath && e.composedPath());
@@ -20,7 +20,7 @@ const SortPopUP = ({items}) => {
     }
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick);
   }, []);
 
@@ -69,6 +69,6 @@ const SortPopUP = ({items}) => {
       }
     </div>
   );
-}
+})
 
 export default SortPopUP;
