@@ -7,7 +7,6 @@ import {Home, Cart} from './pages';
 import { Routes, Route } from 'react-router-dom';
 
 import store from './redux/store';
-import {fetchPizzas} from './redux/actions/pizzas'
 // import {setSortBy as setSortByAC} from './redux/actions/filters'
 // import {setCategoryBy as setCategoryByAС} from './redux/actions/filters'
 
@@ -19,15 +18,7 @@ import {fetchPizzas} from './redux/actions/pizzas'
 // }
 
   const App = () => {
-    const dispatch = useDispatch()
-
-    React.useEffect(() => {
-      // axios.get('http://localhost:3001/pizzas').then(({data}) => {
-      //   dispatch(setPizzasAС(data));
-      // })
-      // dispatch(fetchPizzas)
-      console.log(fetchPizzas());
-    }, [])
+    // const dispatch = useDispatch()
 
     return (
       <div className="wrapper">

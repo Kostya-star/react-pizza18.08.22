@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 
 const PizzaBlock = ({name, imageUrl, price, types, sizes}) => {
+
   const crustNames = ['тонкое', 'традиционное'];
   const availableSizes = [26, 30, 40]
 
@@ -80,7 +81,7 @@ const PizzaBlock = ({name, imageUrl, price, types, sizes}) => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 PizzaBlock.propTypes = {

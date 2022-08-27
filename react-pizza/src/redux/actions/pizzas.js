@@ -1,9 +1,14 @@
 import axios from 'axios';
 
+export const setLoaded = (payload) => ({
+  type: 'SET_LOADED',
+  payload,
+});
 
-export const fetchPizzas = () => {
+export const fetchPizzas = () => (dispatch) => {
+  dispatch(setLoaded(false));
   axios.get('http://localhost:3001/pizzas').then(({data}) => {
-    setPizzas(data);
+    dispatch(setPizzas(data))
   });
 };
 
