@@ -9,9 +9,9 @@ import {fetchPizzas as fetchPizzasThunk} from '../redux/actions/pizzas'
 
 const categoryNames = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 const sortItems = [
-                    {name:'по популярности', type: 'popular'}, 
-                    {name: 'по цене', type: 'price'}, 
-                    {name: 'по алфавиту', type: 'alphabet'},
+                    {name:'по популярности', type: 'popular', order: 'desc'}, 
+                    {name: 'по цене', type: 'price', order: 'desc'}, 
+                    {name: 'по алфавиту', type: 'name', order: 'asc'},
                   ]
 
 const Home = () => {
@@ -22,8 +22,8 @@ const Home = () => {
   const {category, sortBy} = useSelector(({filters}) => filters);
 
   React.useEffect(() => {
-    dispatch(fetchPizzasThunk())
-  }, [category])
+    dispatch(fetchPizzasThunk(sortBy, category))
+  }, [sortBy, category])
 
   const onSelectCategory = React.useCallback((index) => {
     dispatch(setCategoryAC(index))
@@ -40,7 +40,7 @@ const Home = () => {
                     onClickCategory={onSelectCategory}
                     items={categoryNames} />
 
-        <SortPopUP  activeSortType={sortBy}
+        <SortPopUP  activeSortType={sortBy.type}
                     onClickSortType={onSelectSortType} 
                     items={sortItems}
           />

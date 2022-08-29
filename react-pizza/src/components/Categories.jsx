@@ -24,7 +24,7 @@ const Categories = React.memo( ({activeCategory, items, onClickCategory}) => {
 
 
 Categories.propTypes = {
-  activeCategory: PropTypes.oneOf([PropTypes.number, null]),
+  activeCategory: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.number]),
   items: PropTypes.arrayOf(PropTypes.string).isRequired,
   onClickCategory: PropTypes.func.isRequired,
 };
