@@ -7,38 +7,30 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
 
   switch (action.type) {
-    case 'ADD_PIZZA_CART':
+    case 'ADD_PIZZA_CART': {
+      const newItems = {
+        ...state.items,
+        [action.payload.id]:
+          !state.items[action.payload.id]
+            ? [action.payload]
+            : [...state.items[action.payload.id], action.payload],
+      }
+
+      const allPizzas = [].concat.apply([],Object.values(newItems));
+      const totalPrice = allPizzas.reduce((sum, obj) => obj.price + sum ,0)
+    
       return {
         ...state,
-        items: {
-          [action.payload.id]: [
-            ...state.items[action.payload.id],
-            action.payload
-          ]
-        }
-      };
+        items: newItems,
+        totalCount: allPizzas.length,
+        totalPrice,
+      }
+    }
       break;
-
-      // state = {
-      // items: {
-      //   0: [
-      //     {1},
-      //     {2},
-      //     {5},
-      //   ]
-      // }}
-    
-    // case 'SET_TOTAL_PRICE':
-    //   return {
-    //     ...state,
-    //     totalPrice: action.payload,
-    //   }; 
-    //   break;
-
-  
-    default: 
+    default:
       return state
   }
 }
+
 
 export default cartReducer;
