@@ -1,21 +1,38 @@
-import React from 'react'
-import { CartItem } from '../components'
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { CartItem } from '../components';
+import {clearCart as clearCartAC} from '../redux/actions/cart';
+import {removeCartItem as removeCartItemAC} from '../redux/actions/cart';
+import emptyCartImg from '../assets/img/empty-cart.png';
 
 
-function Cart() {
+const Cart = () => {
+  const dispatch = useDispatch();
   const {items, totalPrice, totalCount} = useSelector(({cart}) => cart)
 
   const addedPizzas = Object.keys(items).map(key => {
     return items[key].items[0];
   });
 
+  const onClearCart = () => {
+    window.confirm('рил хош удалить пиццы?') && dispatch(clearCartAC())
+  }
+
+  const onRemoveCartItem = (id) => {
+    window.confirm('рил хотите удалить пицарик?') && dispatch(removeCartItemAC(id))
+  }
+
   return (
     <div>
        <div className="content">
         <div className="container container--cart">
-          <div className="cart">
+
+          
+          {
+            totalCount ?  
+
+            (<div className="cart">
             <div className="cart__top">
               <h2 className="content__title"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.33333 16.3333C7.06971 16.3333 7.66667 15.7364 7.66667 15C7.66667 14.2636 7.06971 13.6667 6.33333 13.6667C5.59695 13.6667 5 14.2636 5 15C5 15.7364 5.59695 16.3333 6.33333 16.3333Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -31,13 +48,21 @@ function Cart() {
 <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
-                <span>Очистить корзину</span>
+                <span onClick={onClearCart}>Очистить корзину</span>
               </div>
             </div>
             <div className="content__items">
 
               {
-                addedPizzas.map(obj => <CartItem name={obj.name} type={obj.type} size={obj.size} totalPrice={items[obj.id].totalPrice} />)
+                addedPizzas.map(obj => <CartItem 
+                                              id={obj.id}
+                                              name={obj.name} 
+                                              type={obj.type} 
+                                              size={obj.size} 
+                                              totalPrice={items[obj.id].totalPrice}
+                                              totalCount={items[obj.id].items.length} 
+                                              onRemove={onRemoveCartItem}
+                                              key={obj.name} />) 
               }
  
             </div>
@@ -59,7 +84,23 @@ function Cart() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>)
+
+          : 
+          
+          (<div className="cart cart--empty">
+            <h2>Корзина пустая <icon>😕</icon></h2>
+            <p>
+              Вероятней всего, вы не заказывали ещё пиццу.<br />
+              Для того, чтобы заказать пиццу, перейди на главную страницу.
+            </p>
+            <img src={emptyCartImg} alt="Empty cart" />
+            <Link to="/" className="button button--black">
+              <span>Вернуться назад</span>
+            </Link>
+          </div>)
+          }
+  
         </div>
       </div>
     </div>
