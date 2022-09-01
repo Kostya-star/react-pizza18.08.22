@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import { CartItem } from '../components';
 import {clearCart as clearCartAC} from '../redux/actions/cart';
 import {removeCartItem as removeCartItemAC} from '../redux/actions/cart';
+import {plusCartItem as plusCartItemAC} from '../redux/actions/cart';
+import {minusCartItem as minusCartItemAC} from '../redux/actions/cart';
 import emptyCartImg from '../assets/img/empty-cart.png';
+import Button from './../components/Button';
 
 
 const Cart = () => {
@@ -22,6 +25,21 @@ const Cart = () => {
   const onRemoveCartItem = (id) => {
     window.confirm('рил хотите удалить пицарик?') && dispatch(removeCartItemAC(id))
   }
+
+  const onPlusCartItem = (id) => {
+    dispatch(plusCartItemAC(id))
+  }
+
+  const onMinusCartItem = (id) => {
+    dispatch(minusCartItemAC(id))
+  }
+
+  const onMakePayment = () => {
+    alert('Ваш заказ готов! Посмотрите в консоли что вы заказали!')
+    console.log('Ваш заказ', items)
+  }
+
+
 
   return (
     <div>
@@ -62,6 +80,8 @@ const Cart = () => {
                                               totalPrice={items[obj.id].totalPrice}
                                               totalCount={items[obj.id].items.length} 
                                               onRemove={onRemoveCartItem}
+                                              onPlus={onPlusCartItem}
+                                              onMinus={onMinusCartItem}
                                               key={obj.name} />) 
               }
  
@@ -72,16 +92,16 @@ const Cart = () => {
                 <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
               </div>
               <div className="cart__bottom-buttons">
-                <a href="/" className="button button--outline button--add go-back-btn">
+                <Link to="/" className="button button--outline button--add go-back-btn">
                   <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
-
-                  <span>Вернуться назад</span>
-                </a>
-                <div className="button pay-btn">
+                  
+                    <span>Вернуться назад</span>
+                </Link>
+                <Button onClick={onMakePayment} className="button pay-btn">
                   <span>Оплатить сейчас</span>
-                </div>
+                </Button>
               </div>
             </div>
           </div>)
@@ -89,7 +109,7 @@ const Cart = () => {
           : 
           
           (<div className="cart cart--empty">
-            <h2>Корзина пустая <icon>😕</icon></h2>
+            <h2>Корзина пустая <i>😕</i></h2>
             <p>
               Вероятней всего, вы не заказывали ещё пиццу.<br />
               Для того, чтобы заказать пиццу, перейди на главную страницу.
